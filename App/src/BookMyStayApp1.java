@@ -12,67 +12,76 @@
 
 
 
-        abstract class Room {
-            String type;
-            int beds;
-            double price;
+import java.util.HashMap;
+import java.util.Map;
 
-            Room(String type, int beds, double price) {
-                this.type = type;
-                this.beds = beds;
-                this.price = price;
-            }
+/**
+ * Hotel Booking System
+ * Use Case 3: Centralized Inventory using HashMap
+ *
+ * @version 3.0
+ */
 
-            abstract void display();
+// Inventory Class
+class RoomInventory {
+
+    private Map<String, Integer> inventory;
+
+    // Constructor
+    public RoomInventory() {
+        inventory = new HashMap<>();
+    }
+
+    // Add room type
+    public void addRoom(String type, int count) {
+        inventory.put(type, count);
+    }
+
+    // Get availability
+    public int getAvailability(String type) {
+        return inventory.getOrDefault(type, 0);
+    }
+
+    // Update availability
+    public void updateAvailability(String type, int newCount) {
+        if (inventory.containsKey(type)) {
+            inventory.put(type, newCount);
+        } else {
+            System.out.println("Room type not found!");
         }
+    }
 
-        class SingleRoom extends Room {
-            SingleRoom() {
-                super("Single Room", 1, 2000);
-            }
-
-            void display() {
-                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
-            }
+    // Display all rooms
+    public void displayInventory() {
+        System.out.println("\n---- Room Inventory ----");
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
         }
+    }
+}
 
-        class DoubleRoom extends Room {
-            DoubleRoom() {
-                super("Double Room", 2, 3500);
-            }
+// Main Class
+public class BookMyStayApp1 {
 
-            void display() {
-                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
-            }
-        }
+    public static void main(String[] args) {
 
-        class SuiteRoom extends Room {
-            SuiteRoom() {
-                super("Suite Room", 3, 6000);
-            }
+        System.out.println("Book My Stay App - Version 3.0");
 
-            void display() {
-                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
-            }
-        }
+        // Initialize inventory
+        RoomInventory inventory = new RoomInventory();
 
-        class BookMyStayApp1 {
-            public static void main(String[] args) {
+        // Add rooms
+        inventory.addRoom("Single Room", 5);
+        inventory.addRoom("Double Room", 3);
+        inventory.addRoom("Suite Room", 2);
 
-                Room r1 = new SingleRoom();
-                Room r2 = new DoubleRoom();
-                Room r3 = new SuiteRoom();
+        // Display inventory
+        inventory.displayInventory();
 
-                int single = 5, doubleR = 3, suite = 2;
+        // Update availability
+        inventory.updateAvailability("Single Room", 4);
 
-                r1.display();
-                System.out.println("Available: " + single);
-
-                r2.display();
-                System.out.println("Available: " + doubleR);
-
-                r3.display();
-                System.out.println("Available: " + suite);
-            }
-        }
-
+        // Display updated inventory
+        inventory.displayInventory();
+    }
+}
