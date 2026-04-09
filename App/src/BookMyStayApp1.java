@@ -9,24 +9,70 @@
  * @author Hansika
  * @version 1.0
  */
-public class BookMyStayApp1 {
 
-    /**
-     * Main method - Entry point of the application
-     * @param args Command line arguments
-     */
-    public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("=====================================");
-        System.out.println("   Welcome to Book My Stay App");
-        System.out.println("=====================================");
 
-        // Application details
-        System.out.println("Application Name: Hotel Booking Management System");
-        System.out.println("Version: 1.0");
+        abstract class Room {
+            String type;
+            int beds;
+            double price;
 
-        // Closing message
-        System.out.println("Thank you for using our application!");
-    }
-}
+            Room(String type, int beds, double price) {
+                this.type = type;
+                this.beds = beds;
+                this.price = price;
+            }
+
+            abstract void display();
+        }
+
+        class SingleRoom extends Room {
+            SingleRoom() {
+                super("Single Room", 1, 2000);
+            }
+
+            void display() {
+                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
+            }
+        }
+
+        class DoubleRoom extends Room {
+            DoubleRoom() {
+                super("Double Room", 2, 3500);
+            }
+
+            void display() {
+                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
+            }
+        }
+
+        class SuiteRoom extends Room {
+            SuiteRoom() {
+                super("Suite Room", 3, 6000);
+            }
+
+            void display() {
+                System.out.println(type + " | Beds: " + beds + " | Price: ₹" + price);
+            }
+        }
+
+        class BookMyStayApp1 {
+            public static void main(String[] args) {
+
+                Room r1 = new SingleRoom();
+                Room r2 = new DoubleRoom();
+                Room r3 = new SuiteRoom();
+
+                int single = 5, doubleR = 3, suite = 2;
+
+                r1.display();
+                System.out.println("Available: " + single);
+
+                r2.display();
+                System.out.println("Available: " + doubleR);
+
+                r3.display();
+                System.out.println("Available: " + suite);
+            }
+        }
+
